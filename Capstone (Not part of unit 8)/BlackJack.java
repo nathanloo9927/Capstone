@@ -80,7 +80,7 @@ public class BlackJack
     {
         return isDone[currentPlayer];
     }
-    public void finish(int currentPlayer)
+    public void stay(int currentPlayer)
     {
         isDone[currentPlayer] = true;
     }
@@ -88,7 +88,7 @@ public class BlackJack
     {
         cards.clear();
     }
-    /*public void deal()
+    public void deal()
     {
         for (int i = 0; i < numplayers; i++)
         {
@@ -101,39 +101,42 @@ public class BlackJack
             String shortened = suit.substring(0,1);
             if (card == 1) // the 1 equals an ace, which can be either a 1 or 11
             {
-                handValue[currentPlayer][1] = 1;
-                handValue[currentPlayer][2] = 11;
-                numAces[currentPlayer]++;
-                publicHand[currentPlayer] = "?";
-                privateHand[currentPlayer] = ("\tA" + shortened);
+                handValue[i][1] = 1;
+                handValue[i][2] = 11;
+                numAces[i]++;
+                publicHand[i] = "?";
+                privateHand[i] = ("\tA" + shortened);
             } else if (card >= 11 && card <= 13)
             {
-                handValue[currentPlayer][1] = 10;
-                handValue[currentPlayer][2] = 10;
+                handValue[i][1] = 10;
+                handValue[i][2] = 10;
                 if (card == 11) // jack
                 {
-                    publicHand[currentPlayer] = "?";
-                    privateHand[currentPlayer] = ("\tJ" + shortened);
+                    publicHand[i] = "?";
+                    privateHand[i] = ("\tJ" + shortened);
                 } else if (card == 12) // queen
                 {
-                    publicHand[currentPlayer] = "?";
-                    privateHand[currentPlayer] = ("\tQ" + shortened);
+                    publicHand[i] = "?";
+                    privateHand[i] = ("\tQ" + shortened);
                 } else if (card == 13) // king
                 {
-                    publicHand[currentPlayer] = "?";
-                    privateHand[currentPlayer] = ("\tQ" + shortened);
+                    publicHand[i] = "?";
+                    privateHand[i] = ("\tQ" + shortened);
                 }
             } else
             {
-                handValue[currentPlayer][1] = card;
-                handValue[currentPlayer][2] = card;
-                publicHand[currentPlayer] = "?";
-                privateHand[currentPlayer] = ("\t" + card + shortened);
+                handValue[i][1] = card;
+                handValue[i][2] = card;
+                publicHand[i] = "?";
+                privateHand[i] = ("\t" + card + shortened);
             }
             cards.remove(pos);
             cardsuit.remove(pos);
+            
+            // second card
+            this.hit(i);
         }
-    }*/
+    }
     public void computerMoves(int currentPlayer)
     {
         int til21 = 21 - handValue[currentPlayer][2];
@@ -153,7 +156,7 @@ public class BlackJack
                 this.hit(currentPlayer);
             } else
             {
-                this.finish(currentPlayer);
+                this.stay(currentPlayer);
             }
         }
     }

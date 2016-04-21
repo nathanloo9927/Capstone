@@ -57,8 +57,19 @@ public class BlackJackRunner
                 }
                 firstTime = false;
             }
-            System.out.println(game.getDeckSize());
-            
+            System.out.println("Let's deal the cards and start the game!");
+            game.deal();
+            for (int i = 0; i < users; i++)
+            {
+                System.out.println(game.getName(i) + "'s turn (Press \"ENTER\" if this is you)");
+                in.nextLine();
+                while ((game.isBusted(i) == false) && (game.isPlayerDone(i) == false))
+                {
+                    System.out.println("Your Hand: " + game.getRealHand(i));
+                    System.out.print("Would you like to hit or stay? (hit/any other response = stay): ");
+                    
+                }
+            }
             System.out.print("Play again? (yes/any other response = no): ");
             response = in.next();
         }
