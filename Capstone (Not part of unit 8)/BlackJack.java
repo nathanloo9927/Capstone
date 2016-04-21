@@ -3,13 +3,15 @@ import java.awt.*;
 import javax.swing.*;
 public class BlackJack
 {
-    private int numplayers;
-    private int users;
+    private int numplayers; // total number of players
+    private int users; // number of players who are actually users
     private String[] players; // list of all the players, including the computers
     private int[][] handValue; // the second array is for alta. value if Ace is drawn
     private int[] numAces; // number of aces in each player's hand
-    private String[] cardsInHand; // the list of cards each player has
+    private String[] publicHand; // the list of cards each player has. Others can see
+    private String[] privateHand; // the list of cards each player has. Only the player can see
     private ArrayList<Integer> cards = new ArrayList<Integer>(52); // Deck of cards
+    private ArrayList<String> cardsuit = new ArrayList<String>(52); // Suit of cards
     private boolean[] isDone; // checks if the player is finished with his/her turn
     public BlackJack(int numPlayers, int users, String[] names)
     {
@@ -22,8 +24,29 @@ public class BlackJack
             numAces[i] = 0;
             isDone[i] = false;
         }
-        this.handValue = new int[numPlayers][3];
-        this.cardsInHand = new String[numPlayers];
+        for (int i = 1; i <= 4; i++)
+        {
+            for (int j = 1; j <= 13; j++)
+            {
+                cards.add(j);
+                if (i == 1)
+                {
+                    cardsuit.add("Spade");
+                } else if (i == 2)
+                {
+                    cardsuit.add("Club");
+                } else if (i == 3)
+                {
+                    cardsuit.add("Diamond");
+                } else if (i == 4)
+                {
+                    cardsuit.add("Heart");
+                }
+            }
+        }
+        this.handValue = new int[numPlayers][2];
+        this.publicHand = new String[numPlayers];
+        this.privateHand = new String[numPlayers];
     }
     public String getName(int pos)
     {
@@ -35,7 +58,11 @@ public class BlackJack
     }
     public String getHand(int currentPlayer) // the cards
     {
-        return cardsInHand[currentPlayer];
+        return publicHand[currentPlayer];
+    }
+    public String getRealHand(int currentPlayer)
+    {
+        return privateHand[currentPlayer];
     }
     public void getHandValue(int currentPlayer) // how much the cards in the player's hand would
                                                 // total.
@@ -53,59 +80,80 @@ public class BlackJack
     {
         return isDone[currentPlayer];
     }
-    public void makeDeck()
+    public void finish(int currentPlayer)
     {
-        for (int i = 1; i <= 4; i++)
-        {
-            for (int j = 1; j <= 13; j++)
-            {
-                cards.add(j);
-            }
-        }
+        isDone[currentPlayer] = true;
     }
     public void removeAllCards()
     {
         cards.clear();
     }
-    public int inTheLead()
+    /*public void deal()
     {
-        int highest = handValue[0][2];
-        for (int i = 1; i < numplayers; i++)
+        for (int i = 0; i < numplayers; i++)
         {
-            if (handValue[i][2] > highest)
+            // first card, only visible to the current player
+            
+            Random rand = new Random();
+            int pos = rand.nextInt(cards.size());
+            int card = cards.get(pos);
+            String suit = cardsuit.get(pos);
+            String shortened = suit.substring(0,1);
+            if (card == 1) // the 1 equals an ace, which can be either a 1 or 11
             {
-                highest = handValue[i][2];
+                handValue[currentPlayer][1] = 1;
+                handValue[currentPlayer][2] = 11;
+                numAces[currentPlayer]++;
+                publicHand[currentPlayer] = "?";
+                privateHand[currentPlayer] = ("\tA" + shortened);
+            } else if (card >= 11 && card <= 13)
+            {
+                handValue[currentPlayer][1] = 10;
+                handValue[currentPlayer][2] = 10;
+                if (card == 11) // jack
+                {
+                    publicHand[currentPlayer] = "?";
+                    privateHand[currentPlayer] = ("\tJ" + shortened);
+                } else if (card == 12) // queen
+                {
+                    publicHand[currentPlayer] = "?";
+                    privateHand[currentPlayer] = ("\tQ" + shortened);
+                } else if (card == 13) // king
+                {
+                    publicHand[currentPlayer] = "?";
+                    privateHand[currentPlayer] = ("\tQ" + shortened);
+                }
+            } else
+            {
+                handValue[currentPlayer][1] = card;
+                handValue[currentPlayer][2] = card;
+                publicHand[currentPlayer] = "?";
+                privateHand[currentPlayer] = ("\t" + card + shortened);
             }
+            cards.remove(pos);
+            cardsuit.remove(pos);
         }
-        return highest;
-    }
+    }*/
     public void computerMoves(int currentPlayer)
     {
-        if (handValue[currentPlayer][2] < this.inTheLead())
+        int til21 = 21 - handValue[currentPlayer][2];
+        if (til21 >= 10)
         {
             this.hit(currentPlayer);
-        }
-        else
+        } else
         {
-            int til21 = 21 - handValue[currentPlayer][2];
-            if (til21 >= 10)
+            int stillAliveCards = 0;
+            for (int i = 1; i <= til21; i++)
+            {
+                stillAliveCards += Collections.frequency(cards, i);
+            }
+            double probAlive = (stillAliveCards / cards.size()) * 100;
+            if (probAlive >= 60.0)
             {
                 this.hit(currentPlayer);
             } else
             {
-                int stillAliveCards = 0;
-                for (int i = 1; i <= til21; i++)
-                {
-                    stillAliveCards += Collections.frequency(cards, i);
-                }
-                double probAlive = (stillAliveCards / cards.size()) * 100;
-                if (probAlive >= 60.0)
-                {
-                    this.hit(currentPlayer);
-                } else
-                {
-                    isDone[currentPlayer] = true;
-                }
+                this.finish(currentPlayer);
             }
         }
     }
@@ -114,6 +162,8 @@ public class BlackJack
         Random rand = new Random();
         int pos = rand.nextInt(cards.size());
         int card = cards.get(pos);
+        String suit = cardsuit.get(pos);
+        String shortened = suit.substring(0,1);
         if (card == 1) // the 1 equals an ace, which can be either a 1 or 11
         {
             if (numAces[currentPlayer] >= 2)
@@ -127,28 +177,34 @@ public class BlackJack
                 handValue[currentPlayer][2] += 11;
                 numAces[currentPlayer]++;
             }
-            cardsInHand[currentPlayer] += "\tA";
+            publicHand[currentPlayer] += ("\tA" + shortened);
+            privateHand[currentPlayer] += ("\tA" + shortened);
         } else if (card >= 11 && card <= 13)
         {
             handValue[currentPlayer][1] += 10;
             handValue[currentPlayer][2] += 10;
             if (card == 11) // jack
             {
-                cardsInHand[currentPlayer] += "\tJ";
+                publicHand[currentPlayer] += ("\tJ" + shortened);
+                privateHand[currentPlayer] += ("\tJ" + shortened);
             } else if (card == 12) // queen
             {
-                cardsInHand[currentPlayer] += "\tQ";
+                publicHand[currentPlayer] += ("\tQ" + shortened);
+                privateHand[currentPlayer] += ("\tQ" + shortened);
             } else if (card == 13) // king
             {
-                cardsInHand[currentPlayer] += "\tQ";
+                publicHand[currentPlayer] += ("\tQ" + shortened);
+                privateHand[currentPlayer] += ("\tQ" + shortened);
             }
         } else
         {
             handValue[currentPlayer][1] += card;
             handValue[currentPlayer][2] += card;
-            cardsInHand[currentPlayer] += ("\t" + card);
+            publicHand[currentPlayer] += ("\t" + card + shortened);
+            privateHand[currentPlayer] += ("\t" + card + shortened);
         }
         cards.remove(pos);
+        cardsuit.remove(pos);
         return card;
     }
     public boolean isBusted(int currentPlayer)
