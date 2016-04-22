@@ -67,7 +67,34 @@ public class BlackJackRunner
                 {
                     System.out.println("Your Hand: " + game.getRealHand(i));
                     System.out.print("Would you like to hit or stay? (hit/any other response = stay): ");
-                    
+                    String decision = in.next();
+                    if (decision.equals("hit"))
+                    {
+                        game.hitandprint(i);
+                    } else
+                    {
+                        game.stay(i);
+                    }
+                }
+            }
+            for (int i = users; i < players; i++)
+            {
+                System.out.println(game.getName(i) + "'s turn");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+                System.out.println(game.getName(i) + "'s hand");
+                System.out.println(game.getHand(i));
+                while ((game.isBusted(i) == false) && (game.isPlayerDone(i) == false))
+                {
+                    game.computerMoves(i);
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }
                 }
             }
             System.out.print("Play again? (yes/any other response = no): ");
