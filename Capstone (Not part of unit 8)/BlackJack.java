@@ -136,11 +136,14 @@ public class BlackJack
         } else
         {
             int stillAliveCards = 0;
-            for (int i = 1; i <= til21; i++)
+            for (Integer i : cards)
             {
-                stillAliveCards += Collections.frequency(cards, i);
+                if (i <= til21)
+                {
+                    stillAliveCards++;
+                }
             }
-            double probAlive = (stillAliveCards / cards.size()) * 100;
+            double probAlive = (stillAliveCards / cards.size()) * 100.0;
             if (probAlive >= 60.0)
             {
                 System.out.println(players[currentPlayer] + ": Hit");
@@ -257,6 +260,16 @@ public class BlackJack
         cardsuit.remove(pos);
         System.out.println("You got a(n) " + cardstr);
     }
+    public boolean has21(int currentPlayer)
+    {
+        if (handValue[currentPlayer][1] == 21)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
     public boolean isBusted(int currentPlayer)
     {
         if (handValue[currentPlayer][1] > 21)
@@ -306,13 +319,11 @@ public class BlackJack
                 String people = "We have a tie with " + highest + "\n";
                 for (Integer i : indexOfTies)
                 {
-                    people += players[i];
+                    people += (players[i] + "\n");
                 }
+                return people;
             }
-        } else
-        {
-            return "No Winner. Everyone has busted";
         }
-        return "Nothing";
+        return "No Winner. Everyone busted";
     }
 }

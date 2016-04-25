@@ -59,13 +59,15 @@ public class BlackJackRunner
             }
             System.out.println("Let's deal the cards and start the game!");
             System.out.println("\"ENTER\" = begin");
-            in.nextLine();
+            Scanner sys = new Scanner(System.in);
+            sys.nextLine();
             game.deal();
             for (int i = 0; i < users; i++)
             {
                 System.out.println(game.getName(i) + "'s turn (Press \"ENTER\" if this is you)");
-                in.nextLine();
-                while ((game.isBusted(i) == false) && (game.isPlayerDone(i) == false))
+                Scanner out = new Scanner(System.in);
+                out.nextLine();
+                while ((game.isBusted(i) == false) && (game.isPlayerDone(i) == false) && (game.has21(i) == false))
                 {
                     System.out.println("Your Hand: " + game.getRealHand(i));
                     System.out.print("Would you like to hit or stay? (hit/any other response = stay): ");
@@ -77,10 +79,14 @@ public class BlackJackRunner
                     {
                         game.stay(i);
                     }
-                    if (game.isBusted(i) == true)
+                }
+                if (game.isBusted(i) == true)
                     {
                         System.out.println("Oops, you busted");
                     }
+                if (game.has21(i) == true)
+                {
+                    System.out.println("You have 21!");
                 }
             }
             for (int i = users; i < players; i++)
