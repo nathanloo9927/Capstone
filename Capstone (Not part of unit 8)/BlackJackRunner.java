@@ -58,6 +58,8 @@ public class BlackJackRunner
                 firstTime = false;
             }
             System.out.println("Let's deal the cards and start the game!");
+            System.out.println("\"ENTER\" = begin");
+            in.nextLine();
             game.deal();
             for (int i = 0; i < users; i++)
             {
@@ -74,6 +76,10 @@ public class BlackJackRunner
                     } else
                     {
                         game.stay(i);
+                    }
+                    if (game.isBusted(i) == true)
+                    {
+                        System.out.println("Oops, you busted");
                     }
                 }
             }
@@ -97,6 +103,7 @@ public class BlackJackRunner
                     }
                 }
             }
+            System.out.println(game.declareWinner());
             System.out.print("Play again? (yes/any other response = no): ");
             response = in.next();
         }

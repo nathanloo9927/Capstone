@@ -19,6 +19,7 @@ public class BlackJack
         this.users = users;
         this.players = names;
         this.numAces = new int[numPlayers];
+        this.isDone = new boolean[numPlayers];
         for (int i = 0; i < numPlayers; i++)
         {
             numAces[i] = 0;
@@ -89,15 +90,15 @@ public class BlackJack
             String shortened = suit.substring(0,1);
             if (card == 1) // the 1 equals an ace, which can be either a 1 or 11
             {
-                handValue[i][1] = 1;
-                handValue[i][2] = 11;
+                handValue[i][0] = 1;
+                handValue[i][1] = 11;
                 numAces[i]++;
                 publicHand[i] = "?";
                 privateHand[i] = ("\tA" + shortened);
             } else if (card >= 11 && card <= 13)
             {
+                handValue[i][0] = 10;
                 handValue[i][1] = 10;
-                handValue[i][2] = 10;
                 if (card == 11) // jack
                 {
                     publicHand[i] = "?";
@@ -113,8 +114,8 @@ public class BlackJack
                 }
             } else
             {
+                handValue[i][0] = card;
                 handValue[i][1] = card;
-                handValue[i][2] = card;
                 publicHand[i] = "?";
                 privateHand[i] = ("\t" + card + shortened);
             }
@@ -127,7 +128,7 @@ public class BlackJack
     }
     public void computerMoves(int currentPlayer)
     {
-        int til21 = 21 - handValue[currentPlayer][2];
+        int til21 = 21 - handValue[currentPlayer][1];
         if (til21 >= 10)
         {
             System.out.println(players[currentPlayer] + ": Hit");
@@ -163,20 +164,20 @@ public class BlackJack
             if (numAces[currentPlayer] >= 2)
             {
                 int temp = handValue[currentPlayer][1];
-                handValue[currentPlayer][2] = temp + 11;
-                handValue[currentPlayer][1] += 1;
+                handValue[currentPlayer][1] = temp + 11;
+                handValue[currentPlayer][0] += 1;
             } else
             {
-                handValue[currentPlayer][1] += 1;
-                handValue[currentPlayer][2] += 11;
+                handValue[currentPlayer][0] += 1;
+                handValue[currentPlayer][1] += 11;
                 numAces[currentPlayer]++;
             }
             publicHand[currentPlayer] += ("\tA" + shortened);
             privateHand[currentPlayer] += ("\tA" + shortened);
         } else if (card >= 11 && card <= 13)
         {
+            handValue[currentPlayer][0] += 10;
             handValue[currentPlayer][1] += 10;
-            handValue[currentPlayer][2] += 10;
             if (card == 11) // jack
             {
                 publicHand[currentPlayer] += ("\tJ" + shortened);
@@ -192,8 +193,8 @@ public class BlackJack
             }
         } else
         {
+            handValue[currentPlayer][0] += card;
             handValue[currentPlayer][1] += card;
-            handValue[currentPlayer][2] += card;
             publicHand[currentPlayer] += ("\t" + card + shortened);
             privateHand[currentPlayer] += ("\t" + card + shortened);
         }
@@ -212,13 +213,13 @@ public class BlackJack
         {
             if (numAces[currentPlayer] >= 2)
             {
-                int temp = handValue[currentPlayer][1];
-                handValue[currentPlayer][2] = temp + 11;
-                handValue[currentPlayer][1] += 1;
+                int temp = handValue[currentPlayer][0];
+                handValue[currentPlayer][1] = temp + 11;
+                handValue[currentPlayer][0] += 1;
             } else
             {
-                handValue[currentPlayer][1] += 1;
-                handValue[currentPlayer][2] += 11;
+                handValue[currentPlayer][0] += 1;
+                handValue[currentPlayer][1] += 11;
                 numAces[currentPlayer]++;
             }
             cardstr = "A" + shortened;
@@ -226,8 +227,8 @@ public class BlackJack
             privateHand[currentPlayer] += ("\tA" + shortened);
         } else if (card >= 11 && card <= 13)
         {
+            handValue[currentPlayer][0] += 10;
             handValue[currentPlayer][1] += 10;
-            handValue[currentPlayer][2] += 10;
             if (card == 11) // jack
             {
                 cardstr = "J" + shortened;
@@ -247,8 +248,8 @@ public class BlackJack
         } else
         {
             cardstr = card + shortened;
+            handValue[currentPlayer][0] += card;
             handValue[currentPlayer][1] += card;
-            handValue[currentPlayer][2] += card;
             publicHand[currentPlayer] += ("\t" + card + shortened);
             privateHand[currentPlayer] += ("\t" + card + shortened);
         }
@@ -258,14 +259,14 @@ public class BlackJack
     }
     public boolean isBusted(int currentPlayer)
     {
-        if (handValue[currentPlayer][2] > 21)
+        if (handValue[currentPlayer][1] > 21)
         {
-            if (handValue[currentPlayer][1] > 21)
+            if (handValue[currentPlayer][0] > 21)
             {
                 return true;
             } else
             {
-                handValue[currentPlayer][2] = handValue[currentPlayer][1];
+                handValue[currentPlayer][1] = handValue[currentPlayer][0];
                 return false;
             }
         } else
@@ -275,17 +276,43 @@ public class BlackJack
     }
     public String declareWinner()
     {
-        int highest = handValue[0][2];
-        int highestIndex = 0;
-        for (int i = 1; i < numplayers; i++)
+        int highest = 0;
+        int highestIndex = -1;
+        ArrayList<Integer> indexOfTies = new ArrayList<Integer>();
+        for (int i = 0; i < numplayers; i++)
         {
-            if (handValue[i][2] > highest && handValue[i][2] <= 21)
+            if (handValue[i][1] > highest && handValue[i][1] <= 21)
             {
-                highest = handValue[i][2];
+                highest = handValue[i][1];
                 highestIndex = i;
+                indexOfTies.clear();
+                indexOfTies.add(i);
+            } else if (handValue[i][1] == highest && handValue[i][1] <= 21)
+            {
+                indexOfTies.add(i);
             }
         }
-        return players[highestIndex] + "wins with" + handValue[highestIndex][2] + 
-        "\tHand: " + privateHand[highestIndex];
+        for (int i = 0; i < numplayers; i++)
+        {
+            System.out.println(players[i] + "'s hand: " + privateHand[i]);
+        }
+        if (highestIndex >= 0)
+        {
+            if (indexOfTies.size() == 1)
+            {
+                return players[highestIndex] + " wins with " + handValue[highestIndex][1];
+            } else
+            {
+                String people = "We have a tie with " + highest + "\n";
+                for (Integer i : indexOfTies)
+                {
+                    people += players[i];
+                }
+            }
+        } else
+        {
+            return "No Winner. Everyone has busted";
+        }
+        return "Nothing";
     }
 }
