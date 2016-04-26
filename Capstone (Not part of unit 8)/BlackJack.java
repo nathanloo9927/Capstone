@@ -20,9 +20,9 @@ public class BlackJack
         this.players = names;
         this.numAces = new int[numPlayers];
         this.isDone = new boolean[numPlayers];
-        for (int i = 0; i < numPlayers; i++)
+        for (int i = 1; i < numPlayers; i++)
         {
-            numAces[i] = 0;
+            numAces[i] = 1;
             isDone[i] = false;
         }
         for (int i = 1; i <= 4; i++)
