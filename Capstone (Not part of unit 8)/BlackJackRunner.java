@@ -81,11 +81,13 @@ public class BlackJackRunner
                     }
                 }
                 if (game.isBusted(i) == true)
-                    {
-                        System.out.println("Oops, you busted");
-                    }
+                {
+                    System.out.println("Your Hand: " + game.getRealHand(i));
+                    System.out.println("Oops, you busted");
+                }
                 if (game.has21(i) == true)
                 {
+                    System.out.println("Your Hand: " + game.getRealHand(i));
                     System.out.println("You have 21!");
                 }
             }
@@ -93,7 +95,7 @@ public class BlackJackRunner
             {
                 System.out.println(game.getName(i) + "'s turn");
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1500);
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }
@@ -103,7 +105,7 @@ public class BlackJackRunner
                 {
                     game.computerMoves(i);
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(1500);
                     } catch (InterruptedException ex) {
                         Thread.currentThread().interrupt();
                     }

@@ -129,30 +129,45 @@ public class BlackJack
     public void computerMoves(int currentPlayer)
     {
         int til21 = 21 - handValue[currentPlayer][1];
-        if (til21 >= 10)
+        if (til21 >= 5/*10*/)
         {
             System.out.println(players[currentPlayer] + ": Hit");
             this.hitandprint(currentPlayer);
         } else
         {
-            int stillAliveCards = 0;
+            /*int stillAliveCards = 0;
             for (Integer i : cards)
             {
-                if (i <= til21)
+                int inte = i.intValue();
+                if (inte <= til21)
                 {
                     stillAliveCards++;
                 }
             }
-            double probAlive = (stillAliveCards / cards.size()) * 100.0;
+            System.out.println("Number of cards that can save you: " + stillAliveCards);
+            int numcards = cards.size();
+            System.out.println("Cards left in deck: " + numcards);
+            double probAlive = (stillAliveCards / numcards) * 100.0;
+            System.out.println(probAlive + "%");
+            double prob = (stillAliveCards / numcards) * 1.0;
+            System.out.println(prob + "%");
             if (probAlive >= 60.0)
             {
                 System.out.println(players[currentPlayer] + ": Hit");
                 this.hitandprint(currentPlayer);
             } else
-            {
+            {*/
                 System.out.println(players[currentPlayer] + ": Stay");
                 this.stay(currentPlayer);
-            }
+            //}
+        }
+        if (this.isBusted(currentPlayer) == true)
+        {
+            System.out.println("Oops, you busted");
+        }
+        if (this.has21(currentPlayer) == true)
+        {
+            System.out.println("You have 21!");
         }
     }
     public void hit(int currentPlayer)
