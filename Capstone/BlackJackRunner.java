@@ -7,13 +7,16 @@ public class BlackJackRunner
     {
         int response = 2;
         System.out.println("Welcome to BlackJack");
-        System.out.println("Choose the number of players that are playing, then choose how many");
-        System.out.println("of those players are controlled by an actual user");
         while (response >= 1 && response <= 2)
         {
             Scanner in = new Scanner(System.in);
+            int gameChoice;
             int players;
             int users;
+            /*do {
+                System.out.println("Choose game mode\n1-Quick game (1 game)\n2-Series game (set number of games)\n3-Score game (reach a certain score)");
+                
+            } while (gameChoice < 1 || gameChoice > 3);*/
             do {
                 System.out.print("How many players are playing? (2-10 players): ");
                 while (!in.hasNextInt()) {
@@ -106,6 +109,11 @@ public class BlackJackRunner
                     }
                     System.out.println(game.getName(i) + "'s hand");
                     System.out.println(game.getHand(i));
+                    try {
+                        Thread.sleep(1500);
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }
                     while ((game.isBusted(i) == false) && (game.isPlayerDone(i) == false) && (game.has21(i) == false))
                     {
                         game.computerMoves(i);
@@ -114,6 +122,16 @@ public class BlackJackRunner
                         } catch (InterruptedException ex) {
                             Thread.currentThread().interrupt();
                         }
+                    }
+                    if (game.isBusted(i) == true)
+                    {
+                        System.out.println("Your Hand: " + game.getRealHand(i));
+                        System.out.println("Oops, you busted");
+                    }
+                    if (game.has21(i) == true)
+                    {
+                        System.out.println("Your Hand: " + game.getRealHand(i));
+                        System.out.println("You have 21!");
                     }
                 }
                 System.out.println(game.declareWinner());
@@ -128,6 +146,7 @@ public class BlackJackRunner
                     }
                     response = choice.nextInt();
                 } while (response < 1 || response > 3);
+                System.out.println();
             }
         }
     }

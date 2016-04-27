@@ -49,40 +49,48 @@ public class BlackJack
         this.publicHand = new String[numPlayers];
         this.privateHand = new String[numPlayers];
     }
+
     public String getName(int pos)
     {
         return players[pos];
     }
+
     public int getDeckSize()
     {
         return cards.size();
     }
+
     public String getHand(int currentPlayer) // the cards
     {
         return publicHand[currentPlayer];
     }
+
     public String getRealHand(int currentPlayer)
     {
         return privateHand[currentPlayer];
     }
+
     public boolean isPlayerDone(int currentPlayer)
     {
         return isDone[currentPlayer];
     }
+
     public void stay(int currentPlayer)
     {
         isDone[currentPlayer] = true;
     }
+
     public void removeAllCards()
     {
         cards.clear();
     }
+
     public void deal()
     {
         for (int i = 0; i < numplayers; i++)
         {
             // first card, only visible to the current player
-            
+
             Random rand = new Random();
             int pos = rand.nextInt(cards.size());
             int card = cards.get(pos);
@@ -121,11 +129,12 @@ public class BlackJack
             }
             cards.remove(pos);
             cardsuit.remove(pos);
-            
+
             // second card
             this.hit(i);
         }
     }
+
     public void computerMoves(int currentPlayer)
     {
         int til21 = 21 - handValue[currentPlayer][1];
@@ -156,15 +165,8 @@ public class BlackJack
                 this.stay(currentPlayer);
             }
         }
-        if (this.isBusted(currentPlayer) == true)
-        {
-            System.out.println("Oops, you busted");
-        }
-        if (this.has21(currentPlayer) == true)
-        {
-            System.out.println("You have 21!");
-        }
     }
+
     public void hit(int currentPlayer)
     {
         Random rand = new Random();
@@ -214,6 +216,7 @@ public class BlackJack
         cards.remove(pos);
         cardsuit.remove(pos);
     }
+
     public void hitandprint(int currentPlayer)
     {
         Random rand = new Random();
@@ -269,7 +272,13 @@ public class BlackJack
         cards.remove(pos);
         cardsuit.remove(pos);
         System.out.println("You got a(n) " + cardstr);
+        try {
+            Thread.sleep(250);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
     }
+
     public boolean has21(int currentPlayer)
     {
         if (handValue[currentPlayer][1] == 21)
@@ -280,6 +289,7 @@ public class BlackJack
             return false;
         }
     }
+
     public boolean isBusted(int currentPlayer)
     {
         if (handValue[currentPlayer][1] > 21)
@@ -297,6 +307,7 @@ public class BlackJack
             return false;
         }
     }
+
     public String declareWinner()
     {
         int highest = 0;
