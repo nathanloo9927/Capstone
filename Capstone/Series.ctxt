@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.params=numPlayers\ users\ names\ real\ scoreLimit
+comment0.target=Series(int,\ int,\ java.lang.String[],\ boolean[],\ int)
+comment1.params=currentPlayer
+comment1.target=int\ getScore(int)
+numComments=2

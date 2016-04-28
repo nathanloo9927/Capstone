@@ -3,9 +3,10 @@ import java.awt.*;
 import javax.swing.*;
 public class BlackJack
 {
-    private int numplayers; // total number of players
-    private int users; // number of players who are actually users
+    private int numplayers;
+    private int users;
     private String[] players; // list of all the players, including the computers
+    private boolean[] real; // true if the player is an actual user, false if it is a computer
     private int[][] handValue; // the second array is for alta. value if Ace is drawn
     private int[] numAces; // number of aces in each player's hand
     private String[] publicHand; // the list of cards each player has. Others can see
@@ -13,16 +14,17 @@ public class BlackJack
     private ArrayList<Integer> cards = new ArrayList<Integer>(52); // Deck of cards
     private ArrayList<String> cardsuit = new ArrayList<String>(52); // Suit of cards
     private boolean[] isDone; // checks if the player is finished with his/her turn
-    public BlackJack(int numPlayers, int users, String[] names)
+    public BlackJack(int numPlayers, int users, String[] names, boolean[] real)
     {
         this.numplayers = numPlayers;
         this.users = users;
         this.players = names;
+        this.real = real;
         this.numAces = new int[numPlayers];
         this.isDone = new boolean[numPlayers];
-        for (int i = 1; i < numPlayers; i++)
+        for (int i = 0; i < numPlayers; i++)
         {
-            numAces[i] = 1;
+            numAces[i] = 0;
             isDone[i] = false;
         }
         for (int i = 1; i <= 4; i++)
@@ -50,6 +52,10 @@ public class BlackJack
         this.privateHand = new String[numPlayers];
     }
 
+    public String[] getPlayers()
+    {
+        return players;
+    }
     public String getName(int pos)
     {
         return players[pos];

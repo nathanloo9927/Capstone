@@ -13,10 +13,16 @@ public class BlackJackRunner
             int gameChoice;
             int players;
             int users;
-            /*do {
-                System.out.println("Choose game mode\n1-Quick game (1 game)\n2-Series game (set number of games)\n3-Score game (reach a certain score)");
-                
-            } while (gameChoice < 1 || gameChoice > 3);*/
+            System.out.println("Choose game mode\n1-Quick game (1 game)\n2-Series game (set number of games)\n3-Score game (reach a certain score)");
+            do {
+                System.out.print("Your choice: ");
+                while (!in.hasNextInt()) {
+                    System.out.println("That's not an integer!");
+                    System.out.print("Your choice: ");
+                    in.next();
+                }
+                gameChoice = in.nextInt();
+            } while (gameChoice < 1 || gameChoice > 3);
             do {
                 System.out.print("How many players are playing? (2-10 players): ");
                 while (!in.hasNextInt()) {
@@ -27,6 +33,7 @@ public class BlackJackRunner
                 players = in.nextInt();
             } while (players < 2 || players > 10);
             String[] names = new String[players];
+            boolean[] realPlayer = new boolean[players];
             do {
                 System.out.println("How many of those players will be controlled by a player (At least 1");
                 System.out.print("player must be controlled by the user): ");
@@ -44,18 +51,20 @@ public class BlackJackRunner
             {
                 System.out.print("Player " + (i + 1) + ": ");
                 names[i] = in.next();
+                realPlayer[i] = true;
             }
             int comNamer = 1;
             for (int i = users; i < players; i++)
             {
                 names[i] = "CPU" + comNamer;
                 comNamer++;
+                realPlayer[i] = false;
             }
             boolean firstTime = true;
             response = 1;
             while (response == 1)
             {
-                BlackJack game = new BlackJack(players, users, names);
+                BlackJack game = new BlackJack(players, users, names, realPlayer);
                 if (firstTime == true)
                 {
                     System.out.println("\nThese are the people who will be playing:");
