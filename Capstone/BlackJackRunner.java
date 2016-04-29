@@ -10,10 +10,10 @@ public class BlackJackRunner
         while (response >= 1 && response <= 2)
         {
             Scanner in = new Scanner(System.in);
-            int gameChoice;
+            //int gameChoice;
             int players;
             int users;
-            System.out.println("Choose game mode\n1-Quick game (1 game)\n2-Series game (set number of games)\n3-Score game (reach a certain score)");
+            /*System.out.println("Choose game mode\n1-Quick game (1 game)\n2-Series game (set number of games)\n3-Score game (reach a certain score)");
             do {
                 System.out.print("Your choice: ");
                 while (!in.hasNextInt()) {
@@ -22,7 +22,7 @@ public class BlackJackRunner
                     in.next();
                 }
                 gameChoice = in.nextInt();
-            } while (gameChoice < 1 || gameChoice > 3);
+            } while (gameChoice < 1 || gameChoice > 3);*/
             do {
                 System.out.print("How many players are playing? (2-10 players): ");
                 while (!in.hasNextInt()) {
@@ -74,89 +74,26 @@ public class BlackJackRunner
                     }
                     firstTime = false;
                 }
-                System.out.println("Let's deal the cards and start the game!");
-                System.out.print("\"ENTER\" = begin");
-                Scanner sys = new Scanner(System.in);
-                sys.nextLine();
-                game.deal();
-                for (int i = 0; i < users; i++)
-                {
-                    System.out.print(game.getName(i) + "'s turn (Press \"ENTER\" if this is you)");
-                    Scanner out = new Scanner(System.in);
-                    out.nextLine();
-                    while ((game.isBusted(i) == false) && (game.isPlayerDone(i) == false) && (game.has21(i) == false))
-                    {
-                        System.out.println("Your Hand: " + game.getRealHand(i));
-                        System.out.print("Would you like to hit or stay? (hit/any other response = stay): ");
-                        String decision = in.next();
-                        if (decision.equals("hit"))
-                        {
-                            game.hitandprint(i);
-                        } else
-                        {
-                            game.stay(i);
-                        }
-                    }
-                    if (game.isBusted(i) == true)
-                    {
-                        System.out.println("Your Hand: " + game.getRealHand(i));
-                        System.out.println("Oops, you busted");
-                    }
-                    if (game.has21(i) == true)
-                    {
-                        System.out.println("Your Hand: " + game.getRealHand(i));
-                        System.out.println("You have 21!");
-                    }
-                }
-                for (int i = users; i < players; i++)
-                {
-                    System.out.println(game.getName(i) + "'s turn");
-                    try {
-                        Thread.sleep(1500);
-                    } catch (InterruptedException ex) {
-                        Thread.currentThread().interrupt();
-                    }
-                    System.out.println(game.getName(i) + "'s hand");
-                    System.out.println(game.getHand(i));
-                    try {
-                        Thread.sleep(1500);
-                    } catch (InterruptedException ex) {
-                        Thread.currentThread().interrupt();
-                    }
-                    while ((game.isBusted(i) == false) && (game.isPlayerDone(i) == false) && (game.has21(i) == false))
-                    {
-                        game.computerMoves(i);
-                        try {
-                            Thread.sleep(1500);
-                        } catch (InterruptedException ex) {
-                            Thread.currentThread().interrupt();
-                        }
-                    }
-                    if (game.isBusted(i) == true)
-                    {
-                        System.out.println("Your Hand: " + game.getRealHand(i));
-                        System.out.println("Oops, you busted");
-                    }
-                    if (game.has21(i) == true)
-                    {
-                        System.out.println("Your Hand: " + game.getRealHand(i));
-                        System.out.println("You have 21!");
-                    }
-                }
-                System.out.println(game.declareWinner());
-                System.out.println("\n1-Play again\n2-Change settings\n3-Quit");
-                Scanner choice = new Scanner(System.in);
-                do {
-                    System.out.print("Your choice: ");
-                    while (!choice.hasNextInt()) {
-                        System.out.println("That's not an integer!");
-                        System.out.print("Your choice: ");
-                        choice.next();
-                    }
-                    response = choice.nextInt();
-                } while (response < 1 || response > 3);
+                GameSim.simulateGame(game);
+                response = BlackJackRunner.postgameChoice();
                 System.out.println();
             }
         }
+    }
+    public static int postgameChoice()
+    {
+        int response;
+        System.out.println("\n1-Play again\n2-Change settings\n3-Quit");
+        Scanner choice = new Scanner(System.in);
+        do {
+            System.out.print("Your choice: ");
+            while (!choice.hasNextInt()) {
+                System.out.println("That's not an integer!");
+                System.out.print("Your choice: ");
+                choice.next();
+            }
+            response = choice.nextInt();
+        } while (response < 1 || response > 3);
+        return response;
     }
 }

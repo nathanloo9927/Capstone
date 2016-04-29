@@ -60,6 +60,14 @@ public class BlackJack
     {
         return players[pos];
     }
+    public int getNumPlayers()
+    {
+        return numplayers;
+    }
+    public int getUsers()
+    {
+        return users;
+    }
 
     public int getDeckSize()
     {
