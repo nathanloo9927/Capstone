@@ -60,6 +60,10 @@ public class BlackJack
     {
         return players[pos];
     }
+    public int getHandValue(int currentPlayer)
+    {
+        return handValue[currentPlayer][1];
+    }
     public int getNumPlayers()
     {
         return numplayers;
