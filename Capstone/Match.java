@@ -1,15 +1,17 @@
 import java.util.*;
 import java.awt.*;
 import javax.swing.*;
-public class Score extends BlackJack
+public class Match extends BlackJack
 {
     private int score;
     private int[] scoreKeep;
-    public Score(int numPlayers, int users, String[] names, boolean[] real, int scoreLimit)
+    private int gamesPlayed;
+    public Match(int numPlayers, int users, String[] names, boolean[] real, int scoreLimit)
     {
         super(numPlayers, users, names, real);
         this.score = scoreLimit;
         this.scoreKeep = new int[numPlayers];
+        this.gamesPlayed = 1;
         for (int i = 0; i < numPlayers; i++)
         {
             scoreKeep[i] = 0;
@@ -24,11 +26,16 @@ public class Score extends BlackJack
         }
         return printer;
     }
+    public int getGamesPlayed()
+    {
+        return gamesPlayed;
+    }
     public String roundWinner()
     {
         int highest = 0;
         int highestIndex = -1;
         ArrayList<Integer> indexOfTies = new ArrayList<Integer>();
+        gamesPlayed++;
         for (int i = 0; i < super.getNumPlayers(); i++)
         {
             int value = super.getHandValue(i);
@@ -105,6 +112,6 @@ public class Score extends BlackJack
                 return people;
             }
         }
-        return "Something's wrong.";
+        return "No Winner";
     }
 }

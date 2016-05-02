@@ -13,7 +13,7 @@ public class BlackJackRunner
             int gameChoice;
             int players;
             int users;
-            System.out.println("Choose game mode\n1-Quick game (1 game)\n2-Series game (set number of games)\n3-Score game (reach a certain score)");
+            System.out.println("Choose game mode\n1-Quick game (1 game)\n2-Match game (play until the score limit is reached)\n3-Tournament (play a certain number of games)");
             do {
                 System.out.print("Your choice: ");
                 while (!in.hasNextInt()) {
@@ -89,7 +89,21 @@ public class BlackJackRunner
                         }
                         score = in.nextInt();
                     } while (score < 2 || score > 10);
-                    Score game = new Score(players, users, names, realPlayer, score);
+                    Match g = new Match(players, users, names, realPlayer, score);
+                    if (firstTime == true)
+                    {
+                        System.out.println("\nThese are the people who will be playing:");
+                        for (int i = 0; i < players; i++)
+                        {
+                            System.out.println(g.getName(i));
+                        }
+                        firstTime = false;
+                    }
+                    while (g.thereWinner() == false)
+                    {
+                        GameSim.sim2(g);
+                    }
+                    System.out.println(g.declareWinner());
                 }
                 response = BlackJackRunner.postgameChoice();
                 System.out.println();

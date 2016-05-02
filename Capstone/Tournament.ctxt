@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=numPlayers\ users\ names\ real\ gameLimit
+comment0.target=Tournament(int,\ int,\ java.lang.String[],\ boolean[],\ int)
+comment1.params=
+comment1.target=java.lang.String\ getScores()
+comment2.params=
+comment2.target=int\ getGamesPlayed()
+comment3.params=
+comment3.target=java.lang.String\ roundWinner()
+comment4.params=
+comment4.target=boolean\ GamesReached()
+comment5.params=
+comment5.target=java.lang.String\ declareWinner()
+numComments=6

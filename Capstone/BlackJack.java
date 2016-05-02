@@ -22,7 +22,6 @@ public class BlackJack
         this.real = real;
         this.numAces = new int[numPlayers];
         this.isDone = new boolean[numPlayers];
-        this.makeDeck();
         this.handValue = new int[numPlayers][2];
         this.publicHand = new String[numPlayers];
         this.privateHand = new String[numPlayers];

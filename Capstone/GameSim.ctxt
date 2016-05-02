@@ -2,5 +2,7 @@
 comment0.params=game
 comment0.target=void\ sim1(BlackJack)
 comment1.params=game
-comment1.target=void\ sim2(Score)
-numComments=2
+comment1.target=void\ sim2(Match)
+comment2.params=game
+comment2.target=void\ sim3(Tournament)
+numComments=3
