@@ -1,4 +1,6 @@
 #BlueJ class context
 comment0.params=game
-comment0.target=void\ simulateGame(BlackJack)
-numComments=1
+comment0.target=void\ sim1(BlackJack)
+comment1.params=game
+comment1.target=void\ sim2(Score)
+numComments=2

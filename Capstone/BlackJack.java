@@ -22,31 +22,7 @@ public class BlackJack
         this.real = real;
         this.numAces = new int[numPlayers];
         this.isDone = new boolean[numPlayers];
-        for (int i = 0; i < numPlayers; i++)
-        {
-            numAces[i] = 0;
-            isDone[i] = false;
-        }
-        for (int i = 1; i <= 4; i++)
-        {
-            for (int j = 1; j <= 13; j++)
-            {
-                cards.add(j);
-                if (i == 1)
-                {
-                    cardsuit.add("Spade");
-                } else if (i == 2)
-                {
-                    cardsuit.add("Club");
-                } else if (i == 3)
-                {
-                    cardsuit.add("Diamond");
-                } else if (i == 4)
-                {
-                    cardsuit.add("Heart");
-                }
-            }
-        }
+        this.makeDeck();
         this.handValue = new int[numPlayers][2];
         this.publicHand = new String[numPlayers];
         this.privateHand = new String[numPlayers];
@@ -96,6 +72,34 @@ public class BlackJack
     public void stay(int currentPlayer)
     {
         isDone[currentPlayer] = true;
+    }
+    public void makeDeck()
+    {
+        for (int i = 0; i < numplayers; i++)
+        {
+            numAces[i] = 0;
+            isDone[i] = false;
+        }
+        for (int i = 1; i <= 4; i++)
+        {
+            for (int j = 1; j <= 13; j++)
+            {
+                cards.add(j);
+                if (i == 1)
+                {
+                    cardsuit.add("Spade");
+                } else if (i == 2)
+                {
+                    cardsuit.add("Club");
+                } else if (i == 3)
+                {
+                    cardsuit.add("Diamond");
+                } else if (i == 4)
+                {
+                    cardsuit.add("Heart");
+                }
+            }
+        }
     }
 
     public void removeAllCards()

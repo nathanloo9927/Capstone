@@ -1,11 +1,11 @@
 import java.util.*;
 import java.awt.*;
 import javax.swing.*;
-public class Series extends BlackJack
+public class Score extends BlackJack
 {
     private int score;
     private int[] scoreKeep;
-    public Series(int numPlayers, int users, String[] names, boolean[] real, int scoreLimit)
+    public Score(int numPlayers, int users, String[] names, boolean[] real, int scoreLimit)
     {
         super(numPlayers, users, names, real);
         this.score = scoreLimit;
@@ -89,11 +89,20 @@ public class Series extends BlackJack
                 indexOfTies.add(i);
             }
         }
+        System.out.println(this.getScores());
         if (index >= 0)
         {
             if (indexOfTies.size() == 1)
             {
                 return super.getName(index) + "wins the game";
+            } else
+            {
+                String people = "We have a tie\n";
+                for (Integer i : indexOfTies)
+                {
+                    people += (super.getName(i) + "\n");
+                }
+                return people;
             }
         }
         return "Something's wrong.";

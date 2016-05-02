@@ -10,10 +10,10 @@ public class BlackJackRunner
         while (response >= 1 && response <= 2)
         {
             Scanner in = new Scanner(System.in);
-            //int gameChoice;
+            int gameChoice;
             int players;
             int users;
-            /*System.out.println("Choose game mode\n1-Quick game (1 game)\n2-Series game (set number of games)\n3-Score game (reach a certain score)");
+            System.out.println("Choose game mode\n1-Quick game (1 game)\n2-Series game (set number of games)\n3-Score game (reach a certain score)");
             do {
                 System.out.print("Your choice: ");
                 while (!in.hasNextInt()) {
@@ -22,7 +22,7 @@ public class BlackJackRunner
                     in.next();
                 }
                 gameChoice = in.nextInt();
-            } while (gameChoice < 1 || gameChoice > 3);*/
+            } while (gameChoice < 1 || gameChoice > 3);
             do {
                 System.out.print("How many players are playing? (2-10 players): ");
                 while (!in.hasNextInt()) {
@@ -64,17 +64,33 @@ public class BlackJackRunner
             response = 1;
             while (response == 1)
             {
-                BlackJack game = new BlackJack(players, users, names, realPlayer);
-                if (firstTime == true)
+                if (gameChoice == 1)
                 {
-                    System.out.println("\nThese are the people who will be playing:");
-                    for (int i = 0; i < players; i++)
+                    BlackJack game = new BlackJack(players, users, names, realPlayer);
+                    if (firstTime == true)
                     {
-                        System.out.println(game.getName(i));
+                        System.out.println("\nThese are the people who will be playing:");
+                        for (int i = 0; i < players; i++)
+                        {
+                            System.out.println(game.getName(i));
+                        }
+                        firstTime = false;
                     }
-                    firstTime = false;
+                    GameSim.sim1(game);
+                } else if (gameChoice == 2)
+                {
+                    int score;
+                    do {
+                        System.out.print("Enter the score limit (2-10): ");
+                        while (!in.hasNextInt()) {
+                            System.out.println("That's not an integer!");
+                            System.out.println("Enter the score limit (2-10): ");
+                            in.next();
+                        }
+                        score = in.nextInt();
+                    } while (score < 2 || score > 10);
+                    Score game = new Score(players, users, names, realPlayer, score);
                 }
-                GameSim.simulateGame(game);
                 response = BlackJackRunner.postgameChoice();
                 System.out.println();
             }
