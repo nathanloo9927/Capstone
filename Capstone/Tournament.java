@@ -73,7 +73,7 @@ public class Tournament extends BlackJack
         }
         return "No Winner. Everyone busted";
     }
-    public boolean GamesReached()
+    public boolean gamesReached()
     {
         if (gamesPlayed >= numGames)
         {
@@ -101,12 +101,11 @@ public class Tournament extends BlackJack
                 indexOfTies.add(i);
             }
         }
-        System.out.println(this.getScores());
         if (index >= 0)
         {
             if (indexOfTies.size() == 1)
             {
-                return super.getName(index) + "wins the game";
+                return super.getName(index) + " wins the game";
             } else
             {
                 String people = "We have a tie\n";

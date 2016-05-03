@@ -96,12 +96,11 @@ public class Match extends BlackJack
                 indexOfTies.add(i);
             }
         }
-        System.out.println(this.getScores());
         if (index >= 0)
         {
             if (indexOfTies.size() == 1)
             {
-                return super.getName(index) + "wins the game";
+                return super.getName(index) + " wins the game";
             } else
             {
                 String people = "We have a tie\n";

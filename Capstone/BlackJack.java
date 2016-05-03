@@ -11,8 +11,8 @@ public class BlackJack
     private int[] numAces; // number of aces in each player's hand
     private String[] publicHand; // the list of cards each player has. Others can see
     private String[] privateHand; // the list of cards each player has. Only the player can see
-    private ArrayList<Integer> cards = new ArrayList<Integer>(52); // Deck of cards
-    private ArrayList<String> cardsuit = new ArrayList<String>(52); // Suit of cards
+    private ArrayList<Integer> cards; // Deck of cards
+    private ArrayList<String> cardsuit; // Suit of cards
     private boolean[] isDone; // checks if the player is finished with his/her turn
     public BlackJack(int numPlayers, int users, String[] names, boolean[] real)
     {
@@ -20,6 +20,8 @@ public class BlackJack
         this.users = users;
         this.players = names;
         this.real = real;
+        this.cards = new ArrayList<Integer>(52);
+        this.cardsuit = new ArrayList<String>(52);
         this.numAces = new int[numPlayers];
         this.isDone = new boolean[numPlayers];
         this.handValue = new int[numPlayers][2];
@@ -104,6 +106,7 @@ public class BlackJack
     public void removeAllCards()
     {
         cards.clear();
+        cardsuit.clear();
     }
 
     public void deal()

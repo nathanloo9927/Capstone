@@ -11,6 +11,7 @@ public class GameSim
         sys.nextLine();
         game.makeDeck();
         game.deal();
+        System.out.print('\u000C');
         for (int i = 0; i < game.getUsers(); i++)
         {
             System.out.print(game.getName(i) + "'s turn (Press \"ENTER\" if this is you)");
@@ -40,6 +41,7 @@ public class GameSim
                 System.out.println("Your Hand: " + game.getRealHand(i));
                 System.out.println("You have 21!");
             }
+            System.out.print('\u000C');
         }
         for (int i = game.getUsers(); i < game.getNumPlayers(); i++)
         {
@@ -67,14 +69,23 @@ public class GameSim
             }
             if (game.isBusted(i) == true)
             {
-                System.out.println("Your Hand: " + game.getRealHand(i));
                 System.out.println("Oops, you busted");
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
             }
             if (game.has21(i) == true)
             {
-                System.out.println("Your Hand: " + game.getRealHand(i));
                 System.out.println("You have 21!");
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
             }
+            System.out.print('\u000C');
         }
         System.out.println(game.declareWinner());
     }
@@ -86,6 +97,7 @@ public class GameSim
         sys.nextLine();
         game.makeDeck();
         game.deal();
+        System.out.print('\u000C');
         for (int i = 0; i < game.getUsers(); i++)
         {
             System.out.print(game.getName(i) + "'s turn (Press \"ENTER\" if this is you)");
@@ -115,6 +127,7 @@ public class GameSim
                 System.out.println("Your Hand: " + game.getRealHand(i));
                 System.out.println("You have 21!");
             }
+            System.out.print('\u000C');
         }
         for (int i = game.getUsers(); i < game.getNumPlayers(); i++)
         {
@@ -142,16 +155,26 @@ public class GameSim
             }
             if (game.isBusted(i) == true)
             {
-                System.out.println("Your Hand: " + game.getRealHand(i));
                 System.out.println("Oops, you busted");
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
             }
             if (game.has21(i) == true)
             {
-                System.out.println("Your Hand: " + game.getRealHand(i));
                 System.out.println("You have 21!");
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
             }
+            System.out.print('\u000C');
         }
         System.out.println(game.roundWinner());
+        System.out.println(game.getScores());
         game.removeAllCards();
     }
     public static void sim3(Tournament game)
@@ -162,6 +185,7 @@ public class GameSim
         sys.nextLine();
         game.makeDeck();
         game.deal();
+        System.out.print('\u000C');
         for (int i = 0; i < game.getUsers(); i++)
         {
             System.out.print(game.getName(i) + "'s turn (Press \"ENTER\" if this is you)");
@@ -191,6 +215,7 @@ public class GameSim
                 System.out.println("Your Hand: " + game.getRealHand(i));
                 System.out.println("You have 21!");
             }
+            System.out.print('\u000C');
         }
         for (int i = game.getUsers(); i < game.getNumPlayers(); i++)
         {
@@ -218,16 +243,26 @@ public class GameSim
             }
             if (game.isBusted(i) == true)
             {
-                System.out.println("Your Hand: " + game.getRealHand(i));
                 System.out.println("Oops, you busted");
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
             }
             if (game.has21(i) == true)
             {
-                System.out.println("Your Hand: " + game.getRealHand(i));
                 System.out.println("You have 21!");
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
             }
+            System.out.print('\u000C');
         }
         System.out.println(game.roundWinner());
+        System.out.println(game.getScores());
         game.removeAllCards();
     }
 }

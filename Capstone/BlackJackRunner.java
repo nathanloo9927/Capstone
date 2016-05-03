@@ -69,7 +69,8 @@ public class BlackJackRunner
                     BlackJack game = new BlackJack(players, users, names, realPlayer);
                     if (firstTime == true)
                     {
-                        System.out.println("\nThese are the people who will be playing:");
+                        System.out.println("\nPlayers: " + players);
+                        System.out.println("Names:");
                         for (int i = 0; i < players; i++)
                         {
                             System.out.println(game.getName(i));
@@ -92,7 +93,9 @@ public class BlackJackRunner
                     Match g = new Match(players, users, names, realPlayer, score);
                     if (firstTime == true)
                     {
-                        System.out.println("\nThese are the people who will be playing:");
+                        System.out.println("\nPlayers: " + players);
+                        System.out.println("Score Limit: " + score);
+                        System.out.println("Names:");
                         for (int i = 0; i < players; i++)
                         {
                             System.out.println(g.getName(i));
@@ -104,6 +107,38 @@ public class BlackJackRunner
                         GameSim.sim2(g);
                     }
                     System.out.println(g.declareWinner());
+                } else if (gameChoice == 3)
+                {
+                    int games;
+                    do {
+                        System.out.print("Enter the number of games (3-20): ");
+                        while (!in.hasNextInt()) {
+                            System.out.println("That's not an integer!");
+                            System.out.println("Enter the score limit (2-10): ");
+                            in.next();
+                        }
+                        games = in.nextInt();
+                    } while (games < 3 || games > 20);
+                    Tournament gm = new Tournament(players, users, names, realPlayer, games);
+                    if (firstTime == true)
+                    {
+                        System.out.println("\nPlayers: " + players);
+                        System.out.println("Games: " + games);
+                        System.out.println("Names:");
+                        for (int i = 0; i < players; i++)
+                        {
+                            System.out.println(gm.getName(i));
+                        }
+                        firstTime = false;
+                    }
+                    while (gm.gamesReached() == false)
+                    {
+                        GameSim.sim3(gm);
+                    }
+                    System.out.println(gm.declareWinner());
+                } else
+                {
+                    System.out.println("Something's wrong");
                 }
                 response = BlackJackRunner.postgameChoice();
                 System.out.println();
