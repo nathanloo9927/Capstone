@@ -45,8 +45,9 @@ public class BlackJackRunner
                 }
                 users = in.nextInt();
             } while (users < 1 || users > players);
-            System.out.println("Enter the name(s) for the players who are actual users (cannot be blank and cannot have spaces.");
-            System.out.println("If there are spaces, only the first word will be added to the list of names of players)");
+            System.out.println("Enter the name(s) for the players who are actual users (cannot be");
+            System.out.println("blank and cannot have spaces. If there are spaces, only the first");
+            System.out.println("word will be added to the list of names of players)");
             for (int i = 0; i < users; i++)
             {
                 System.out.print("Player " + (i + 1) + ": ");
@@ -67,9 +68,10 @@ public class BlackJackRunner
                 if (gameChoice == 1)
                 {
                     BlackJack game = new BlackJack(players, users, names, realPlayer);
+                    System.out.print('\u000C');
                     if (firstTime == true)
                     {
-                        System.out.println("\nPlayers: " + players);
+                        System.out.println("Players: " + players);
                         System.out.println("Names:");
                         for (int i = 0; i < players; i++)
                         {
@@ -91,9 +93,10 @@ public class BlackJackRunner
                         score = in.nextInt();
                     } while (score < 2 || score > 10);
                     Match g = new Match(players, users, names, realPlayer, score);
+                    System.out.print('\u000C');
                     if (firstTime == true)
                     {
-                        System.out.println("\nPlayers: " + players);
+                        System.out.println("Players: " + players);
                         System.out.println("Score Limit: " + score);
                         System.out.println("Names:");
                         for (int i = 0; i < players; i++)
@@ -120,9 +123,10 @@ public class BlackJackRunner
                         games = in.nextInt();
                     } while (games < 3 || games > 20);
                     Tournament gm = new Tournament(players, users, names, realPlayer, games);
+                    System.out.print('\u000C');
                     if (firstTime == true)
                     {
-                        System.out.println("\nPlayers: " + players);
+                        System.out.println("Players: " + players);
                         System.out.println("Games: " + games);
                         System.out.println("Names:");
                         for (int i = 0; i < players; i++)

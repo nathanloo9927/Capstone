@@ -32,14 +32,24 @@ public class GameSim
                 }
             }
             if (game.isBusted(i) == true)
-                {
-                    System.out.println("Your Hand: " + game.getRealHand(i));
-                    System.out.println("Oops, you busted");
+            {
+                System.out.println("Your Hand: " + game.getRealHand(i));
+                System.out.println("Oops, you busted");
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
                 }
+            }
             if (game.has21(i) == true)
             {
                 System.out.println("Your Hand: " + game.getRealHand(i));
                 System.out.println("You have 21!");
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
             }
             System.out.print('\u000C');
         }
@@ -91,6 +101,7 @@ public class GameSim
     }
     public static void sim2(Match game)
     {
+        game.incrementGames();
         System.out.println("Let's deal the cards and start round " + game.getGamesPlayed() + "!");
         System.out.print("\"ENTER\" = begin");
         Scanner sys = new Scanner(System.in);
@@ -118,14 +129,24 @@ public class GameSim
                 }
             }
             if (game.isBusted(i) == true)
-                {
-                    System.out.println("Your Hand: " + game.getRealHand(i));
-                    System.out.println("Oops, you busted");
+            {
+                System.out.println("Your Hand: " + game.getRealHand(i));
+                System.out.println("Oops, you busted");
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
                 }
+            }
             if (game.has21(i) == true)
             {
                 System.out.println("Your Hand: " + game.getRealHand(i));
                 System.out.println("You have 21!");
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
             }
             System.out.print('\u000C');
         }
@@ -179,6 +200,7 @@ public class GameSim
     }
     public static void sim3(Tournament game)
     {
+        game.incrementGames();
         System.out.println("Let's deal the cards and start round " + game.getGamesPlayed() + "!");
         System.out.print("\"ENTER\" = begin");
         Scanner sys = new Scanner(System.in);
@@ -206,14 +228,24 @@ public class GameSim
                 }
             }
             if (game.isBusted(i) == true)
-                {
-                    System.out.println("Your Hand: " + game.getRealHand(i));
-                    System.out.println("Oops, you busted");
+            {
+                System.out.println("Your Hand: " + game.getRealHand(i));
+                System.out.println("Oops, you busted");
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
                 }
+            }
             if (game.has21(i) == true)
             {
                 System.out.println("Your Hand: " + game.getRealHand(i));
                 System.out.println("You have 21!");
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
             }
             System.out.print('\u000C');
         }

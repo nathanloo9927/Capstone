@@ -11,7 +11,7 @@ public class Match extends BlackJack
         super(numPlayers, users, names, real);
         this.score = scoreLimit;
         this.scoreKeep = new int[numPlayers];
-        this.gamesPlayed = 1;
+        this.gamesPlayed = 0;
         for (int i = 0; i < numPlayers; i++)
         {
             scoreKeep[i] = 0;
@@ -26,6 +26,10 @@ public class Match extends BlackJack
         }
         return printer;
     }
+    public void incrementGames()
+    {
+        gamesPlayed++;
+    }
     public int getGamesPlayed()
     {
         return gamesPlayed;
@@ -35,7 +39,6 @@ public class Match extends BlackJack
         int highest = 0;
         int highestIndex = -1;
         ArrayList<Integer> indexOfTies = new ArrayList<Integer>();
-        gamesPlayed++;
         for (int i = 0; i < super.getNumPlayers(); i++)
         {
             int value = super.getHandValue(i);
@@ -59,10 +62,10 @@ public class Match extends BlackJack
             if (indexOfTies.size() == 1)
             {
                 scoreKeep[highestIndex]++;
-                return super.getName(highestIndex) + " wins the round with " + highest;
+                return "\n" + super.getName(highestIndex) + " wins the round with " + highest;
             } else
             {
-                String people = "We have a tie with " + highest + "\n";
+                String people = "\nWe have a tie with " + highest + "\n";
                 for (Integer i : indexOfTies)
                 {
                     scoreKeep[i]++;
