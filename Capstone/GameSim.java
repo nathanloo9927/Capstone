@@ -194,8 +194,8 @@ public class GameSim
             }
             System.out.print('\u000C');
         }
-        System.out.println(game.roundWinner());
-        System.out.println(game.getScores());
+        System.out.println("\n" + game.roundWinner() + "\n");
+        System.out.println(game.getScores() + "\n");
         game.removeAllCards();
     }
     public static void sim3(Tournament game)
@@ -293,8 +293,8 @@ public class GameSim
             }
             System.out.print('\u000C');
         }
-        System.out.println(game.roundWinner());
-        System.out.println(game.getScores());
+        System.out.println("\n" + game.roundWinner() + "\n");
+        System.out.println(game.getScores() + "\n");
         game.removeAllCards();
     }
 }

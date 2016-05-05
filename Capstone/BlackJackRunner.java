@@ -13,6 +13,8 @@ public class BlackJackRunner
             int gameChoice;
             int players;
             int users;
+            int games = 3;
+            int score = 2;
             System.out.println("Choose game mode\n1-Quick game (1 game)\n2-Match game (play until the score limit is reached)\n3-Tournament (play a certain number of games)");
             do {
                 System.out.print("Your choice: ");
@@ -78,20 +80,23 @@ public class BlackJackRunner
                             System.out.println(game.getName(i));
                         }
                         firstTime = false;
+                        System.out.println();
                     }
                     GameSim.sim1(game);
                 } else if (gameChoice == 2)
                 {
-                    int score;
-                    do {
-                        System.out.print("Enter the score limit (2-10): ");
-                        while (!in.hasNextInt()) {
-                            System.out.println("That's not an integer!");
-                            System.out.println("Enter the score limit (2-10): ");
-                            in.next();
-                        }
-                        score = in.nextInt();
-                    } while (score < 2 || score > 10);
+                    if (firstTime == true)
+                    {
+                        do {
+                            System.out.print("Enter the score limit (2-10): ");
+                            while (!in.hasNextInt()) {
+                                System.out.println("That's not an integer!");
+                                System.out.print("Enter the score limit (2-10): ");
+                                in.next();
+                            }
+                            score = in.nextInt();
+                        } while (score < 2 || score > 10);
+                    }
                     Match g = new Match(players, users, names, realPlayer, score);
                     System.out.print('\u000C');
                     if (firstTime == true)
@@ -104,24 +109,28 @@ public class BlackJackRunner
                             System.out.println(g.getName(i));
                         }
                         firstTime = false;
+                        System.out.println();
                     }
                     while (g.thereWinner() == false)
                     {
                         GameSim.sim2(g);
                     }
                     System.out.println(g.declareWinner());
+                    System.out.println("Games Played: " + g.getGamesPlayed());
                 } else if (gameChoice == 3)
                 {
-                    int games;
-                    do {
-                        System.out.print("Enter the number of games (3-20): ");
-                        while (!in.hasNextInt()) {
-                            System.out.println("That's not an integer!");
-                            System.out.println("Enter the score limit (2-10): ");
-                            in.next();
-                        }
-                        games = in.nextInt();
-                    } while (games < 3 || games > 20);
+                    if (firstTime == true)
+                    {
+                        do {
+                            System.out.print("Enter the number of games (3-25): ");
+                            while (!in.hasNextInt()) {
+                                System.out.println("That's not an integer!");
+                                System.out.print("Enter the number of games (3-15): ");
+                                in.next();
+                            }
+                            games = in.nextInt();
+                        } while (games < 3 || games > 15);
+                    }
                     Tournament gm = new Tournament(players, users, names, realPlayer, games);
                     System.out.print('\u000C');
                     if (firstTime == true)
@@ -134,6 +143,7 @@ public class BlackJackRunner
                             System.out.println(gm.getName(i));
                         }
                         firstTime = false;
+                        System.out.println();
                     }
                     while (gm.gamesReached() == false)
                     {

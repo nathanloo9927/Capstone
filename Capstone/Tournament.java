@@ -6,11 +6,13 @@ public class Tournament extends BlackJack
     private int numGames;
     private int gamesPlayed;
     private int[] scoreKeep;
+    private int[] randomize; // used to randomize turn order
+    private ArrayList<Integer> randomium;
     public Tournament(int numPlayers, int users, String[] names, boolean[] real, int gameLimit)
     {
         super(numPlayers, users, names, real);
         this.numGames = gameLimit;
-        this.gamesPlayed = 1;
+        this.gamesPlayed = 0;
         this.scoreKeep = new int[numPlayers];
         for (int i = 0; i < numPlayers; i++)
         {
@@ -33,6 +35,20 @@ public class Tournament extends BlackJack
     public int getGamesPlayed()
     {
         return gamesPlayed;
+    }
+    public int[] random()
+    {
+        for (int i = 0; i < super.getNumPlayers(); i++)
+        {
+            randomium.add(i);
+        }
+        Random r = new Random();
+        for (int i = 0; i < super.getNumPlayers(); i++)
+        {
+            int index = r.nextInt(randomium.size());
+            randomize[i] = randomium.remove(index);
+        }
+        return randomize;
     }
     public String roundWinner()
     {
@@ -62,14 +78,14 @@ public class Tournament extends BlackJack
             if (indexOfTies.size() == 1)
             {
                 scoreKeep[highestIndex]++;
-                return "\n" + super.getName(highestIndex) + " wins the round with " + highest;
+                return super.getName(highestIndex) + " wins the round with " + highest;
             } else
             {
-                String people = "\nWe have a tie with " + highest + "\n";
+                String people = "We have a tie with " + highest;
                 for (Integer i : indexOfTies)
                 {
                     scoreKeep[i]++;
-                    people += (super.getName(i) + "\n");
+                    people += ("\n" + super.getName(i));
                 }
                 return people;
             }

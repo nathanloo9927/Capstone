@@ -7,8 +7,6 @@ public class BlackJack
     private int users;
     private String[] players; // list of all the players, including the computers
     private boolean[] real; // true if the player is an actual user, false if it is a computer
-    private int[] randomize; // used to randomize turn order
-    private ArrayList<Integer> randomium; 
     private int[][] handValue; // the second array is for alta. value if Ace is drawn
     private int[] numAces; // number of aces in each player's hand
     private String[] publicHand; // the list of cards each player has. Others can see
@@ -25,8 +23,6 @@ public class BlackJack
         this.cards = new ArrayList<Integer>(52);
         this.cardsuit = new ArrayList<String>(52);
         this.numAces = new int[numPlayers];
-        this.randomize = new int[numPlayers];
-        this.randomium = new ArrayList<Integer>(numPlayers);
         this.isDone = new boolean[numPlayers];
         this.handValue = new int[numPlayers][2];
         this.publicHand = new String[numPlayers];
@@ -113,20 +109,6 @@ public class BlackJack
         cardsuit.clear();
     }
 
-    public int[] random()
-    {
-        for (int i = 0; i < numplayers; i++)
-        {
-            randomium.add(i);
-        }
-        Random r = new Random();
-        for (int i = 0; i < numplayers; i++)
-        {
-            int index = r.nextInt(randomium.size());
-            randomize[i] = randomium.remove(index);
-        }
-        return randomize;
-    }
     public void deal()
     {
         for (int i = 0; i < numplayers; i++)

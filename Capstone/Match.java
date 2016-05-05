@@ -6,12 +6,16 @@ public class Match extends BlackJack
     private int score;
     private int[] scoreKeep;
     private int gamesPlayed;
+    private int[] randomize; // used to randomize turn order
+    private ArrayList<Integer> randomium;
     public Match(int numPlayers, int users, String[] names, boolean[] real, int scoreLimit)
     {
         super(numPlayers, users, names, real);
         this.score = scoreLimit;
         this.scoreKeep = new int[numPlayers];
         this.gamesPlayed = 0;
+        this.randomize = new int[numPlayers];
+        this.randomium = new ArrayList<Integer>(numPlayers);
         for (int i = 0; i < numPlayers; i++)
         {
             scoreKeep[i] = 0;
@@ -33,6 +37,20 @@ public class Match extends BlackJack
     public int getGamesPlayed()
     {
         return gamesPlayed;
+    }
+    public int[] random()
+    {
+        for (int i = 0; i < super.getNumPlayers(); i++)
+        {
+            randomium.add(i);
+        }
+        Random r = new Random();
+        for (int i = 0; i < super.getNumPlayers(); i++)
+        {
+            int index = r.nextInt(randomium.size());
+            randomize[i] = randomium.remove(index);
+        }
+        return randomize;
     }
     public String roundWinner()
     {
@@ -62,14 +80,14 @@ public class Match extends BlackJack
             if (indexOfTies.size() == 1)
             {
                 scoreKeep[highestIndex]++;
-                return "\n" + super.getName(highestIndex) + " wins the round with " + highest;
+                return super.getName(highestIndex) + " wins the round with " + highest;
             } else
             {
-                String people = "\nWe have a tie with " + highest + "\n";
+                String people = "We have a tie with " + highest;
                 for (Integer i : indexOfTies)
                 {
                     scoreKeep[i]++;
-                    people += (super.getName(i) + "\n");
+                    people += ("\n" + super.getName(i));
                 }
                 return people;
             }
