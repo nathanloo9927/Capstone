@@ -49,6 +49,10 @@ public class BlackJack
     {
         return users;
     }
+    public boolean isReal(int currentPlayer)
+    {
+        return real[currentPlayer];
+    }
 
     public int getDeckSize()
     {
