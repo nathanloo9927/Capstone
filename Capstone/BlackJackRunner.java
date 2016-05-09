@@ -15,7 +15,10 @@ public class BlackJackRunner
             int users;
             int games = 3;
             int score = 2;
-            System.out.println("Choose game mode\n1-Quick game (1 game)\n2-Match game (play until the score limit is reached)\n3-Tournament (play a certain number of games)");
+            int money = 500;
+            System.out.println("Choose game mode\n1-Quick game (1 game)\n2-Match game (play until the score limit is reached)");
+            System.out.println("3-Tournament (play a certain number of games)");
+            System.out.println("4-Betting (bet money and play until a person goes bankrupt)\n");
             do {
                 System.out.print("Your choice: ");
                 while (!in.hasNextInt()) {
@@ -24,7 +27,7 @@ public class BlackJackRunner
                     in.next();
                 }
                 gameChoice = in.nextInt();
-            } while (gameChoice < 1 || gameChoice > 3);
+            } while (gameChoice < 1 || gameChoice > 4);
             do {
                 System.out.print("How many players are playing? (2-10 players): ");
                 while (!in.hasNextInt()) {
@@ -122,14 +125,14 @@ public class BlackJackRunner
                     if (firstTime == true)
                     {
                         do {
-                            System.out.print("Enter the number of games (3-25): ");
+                            System.out.print("Enter the number of games (3-20): ");
                             while (!in.hasNextInt()) {
                                 System.out.println("That's not an integer!");
-                                System.out.print("Enter the number of games (3-15): ");
+                                System.out.print("Enter the number of games (3-20): ");
                                 in.next();
                             }
                             games = in.nextInt();
-                        } while (games < 3 || games > 15);
+                        } while (games < 3 || games > 20);
                     }
                     Tournament gm = new Tournament(players, users, names, realPlayer, games);
                     System.out.print('\u000C');
@@ -150,6 +153,39 @@ public class BlackJackRunner
                         GameSim.sim3(gm);
                     }
                     System.out.println(gm.declareWinner());
+                } else if (gameChoice == 4)
+                {
+                    if (firstTime == true)
+                    {
+                        do {
+                            System.out.print("Enter the money each player starts with in a multiple of 100 (500-5000): ");
+                            while (!in.hasNextInt()) {
+                                System.out.println("That's not an integer!");
+                                System.out.print("Enter the money each player starts with in a multiple of 100 (500-5000): ");
+                                in.next();
+                            }
+                            money = in.nextInt();
+                        } while ((money < 500 || money > 5000) && money % 100 != 0);
+                    }
+                    Betting ga = new Betting(players, users, names, realPlayer, money);
+                    System.out.print('\u000C');
+                    if (firstTime == true)
+                    {
+                        System.out.println("Players: " + players);
+                        System.out.println("Games: " + games);
+                        System.out.println("Names:");
+                        for (int i = 0; i < players; i++)
+                        {
+                            System.out.println(ga.getName(i));
+                        }
+                        firstTime = false;
+                        System.out.println();
+                    }
+                    while (ga.bankrupt() == false)
+                    {
+                        
+                    }
+                    System.out.println(ga.declareWinner());
                 } else
                 {
                     System.out.println("Something's wrong");

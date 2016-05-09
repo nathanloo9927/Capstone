@@ -1,28 +1,28 @@
 import java.util.*;
 import java.awt.*;
 import javax.swing.*;
-public class Match extends BlackJack
+public class Betting extends BlackJack
 {
-    private int score;
-    private int[] scoreKeep;
     private int gamesPlayed;
-    public Match(int numPlayers, int users, String[] names, boolean[] real, int scoreLimit)
+    private int pot;
+    private int[] money;
+    public Betting(int numPlayers, int users, String[] names, boolean[] real, int starting)
     {
         super(numPlayers, users, names, real);
-        this.score = scoreLimit;
-        this.scoreKeep = new int[numPlayers];
         this.gamesPlayed = 0;
+        this.pot = 0;
+        this.money = new int[numPlayers];
         for (int i = 0; i < numPlayers; i++)
         {
-            scoreKeep[i] = 0;
+            money[i] = starting;
         }
     }
     public String getScores()
     {
-        String printer = "Name\tScore";
-        for (int i = 0; i < scoreKeep.length; i++)
+        String printer = "Name\tMoney";
+        for (int i = 0; i < money.length; i++)
         {
-            printer += ("\n" + super.getName(i) + "\t" + scoreKeep[i]);
+            printer += ("\n" + super.getName(i) + "\t" + money[i]);
         }
         return printer;
     }
@@ -33,6 +33,14 @@ public class Match extends BlackJack
     public int getGamesPlayed()
     {
         return gamesPlayed;
+    }
+    public int getPot()
+    {
+        return pot;
+    }
+    public void add(int bet)
+    {
+        pot += bet;
     }
     public String roundWinner()
     {
@@ -61,26 +69,32 @@ public class Match extends BlackJack
         {
             if (indexOfTies.size() == 1)
             {
-                scoreKeep[highestIndex]++;
+                money[highestIndex]++;
                 return super.getName(highestIndex) + " wins the round with " + highest;
             } else
             {
                 String people = "We have a tie with " + highest;
+                int ties = 0;
                 for (Integer i : indexOfTies)
                 {
-                    scoreKeep[i]++;
+                    ties++;
+                }
+                int split = pot / ties;
+                for (Integer i : indexOfTies)
+                {
                     people += ("\n" + super.getName(i));
+                    money[i] += split;
                 }
                 return people;
             }
         }
         return "No Winner. Everyone busted";
     }
-    public boolean thereWinner()
+    public boolean bankrupt()
     {
-        for (int i = 0; i < scoreKeep.length; i++)
+        for (int i = 0; i < money.length; i++)
         {
-            if (scoreKeep[i] >= score)
+            if (money[i] <= 0)
             {
                 return true;
             }
@@ -90,12 +104,18 @@ public class Match extends BlackJack
     public String declareWinner()
     {
         int index = -1;
+        int highest = 0;
         ArrayList<Integer> indexOfTies = new ArrayList<Integer>();
-        for (int i = 0; i < scoreKeep.length; i++)
+        for (int i = 0; i < money.length; i++)
         {
-            if (scoreKeep[i] >= score)
+            if (money[i] > highest)
             {
+                highest = money[i];
                 index = i;
+                indexOfTies.clear();
+                indexOfTies.add(i);
+            } else if (money[i] == highest)
+            {
                 indexOfTies.add(i);
             }
         }

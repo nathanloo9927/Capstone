@@ -6,8 +6,6 @@ public class Tournament extends BlackJack
     private int numGames;
     private int gamesPlayed;
     private int[] scoreKeep;
-    private int[] randomize; // used to randomize turn order
-    private ArrayList<Integer> randomium;
     public Tournament(int numPlayers, int users, String[] names, boolean[] real, int gameLimit)
     {
         super(numPlayers, users, names, real);
@@ -35,20 +33,6 @@ public class Tournament extends BlackJack
     public int getGamesPlayed()
     {
         return gamesPlayed;
-    }
-    public int[] random()
-    {
-        for (int i = 0; i < super.getNumPlayers(); i++)
-        {
-            randomium.add(i);
-        }
-        Random r = new Random();
-        for (int i = 0; i < super.getNumPlayers(); i++)
-        {
-            int index = r.nextInt(randomium.size());
-            randomize[i] = randomium.remove(index);
-        }
-        return randomize;
     }
     public String roundWinner()
     {
