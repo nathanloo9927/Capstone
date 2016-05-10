@@ -22,9 +22,13 @@ public class Betting extends BlackJack
         String printer = "Name\tMoney";
         for (int i = 0; i < money.length; i++)
         {
-            printer += ("\n" + super.getName(i) + "\t" + money[i]);
+            printer += ("\n" + super.getName(i) + "\t" + money[i] + "zm");
         }
         return printer;
+    }
+    public int amount(int currentPlayer)
+    {
+        return money[currentPlayer];
     }
     public void incrementGames()
     {
@@ -38,8 +42,29 @@ public class Betting extends BlackJack
     {
         return pot;
     }
-    public void add(int bet)
+    public void emptyPot()
     {
+        pot = 0;
+    }
+    public boolean isValid(int currentPlayer, int bet)
+    {
+        if (bet <= 0)
+        {
+            return false;
+        }
+        if (bet % 100 != 0)
+        {
+            return false;
+        }
+        if (bet > money[currentPlayer])
+        {
+            return false;
+        }
+        return true;
+    }
+    public void add(int currentPlayer, int bet)
+    {
+        money[currentPlayer] -= bet;
         pot += bet;
     }
     public String roundWinner()
@@ -69,16 +94,12 @@ public class Betting extends BlackJack
         {
             if (indexOfTies.size() == 1)
             {
-                money[highestIndex]++;
+                money[highestIndex] += pot;
                 return super.getName(highestIndex) + " wins the round with " + highest;
             } else
             {
                 String people = "We have a tie with " + highest;
-                int ties = 0;
-                for (Integer i : indexOfTies)
-                {
-                    ties++;
-                }
+                int ties = indexOfTies.size();
                 int split = pot / ties;
                 for (Integer i : indexOfTies)
                 {
@@ -123,10 +144,10 @@ public class Betting extends BlackJack
         {
             if (indexOfTies.size() == 1)
             {
-                return super.getName(index) + " wins the game";
+                return super.getName(index) + " wins the game with " + money[index] + "zm";
             } else
             {
-                String people = "We have a tie\n";
+                String people = "We have a tie with" + highest + "zm\n";
                 for (Integer i : indexOfTies)
                 {
                     people += (super.getName(i) + "\n");

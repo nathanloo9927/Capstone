@@ -15,7 +15,7 @@ public class BlackJackRunner
             int users;
             int games = 3;
             int score = 2;
-            int money = 500;
+            int money = 501;
             System.out.println("Choose game mode\n1-Quick game (1 game)\n2-Match game (play until the score limit is reached)");
             System.out.println("3-Tournament (play a certain number of games)");
             System.out.println("4-Betting (bet money and play until a person goes bankrupt)\n");
@@ -165,14 +165,14 @@ public class BlackJackRunner
                                 in.next();
                             }
                             money = in.nextInt();
-                        } while ((money < 500 || money > 5000) && money % 100 != 0);
+                        } while (money % 100 != 0 || (money < 500 || money > 5000));
                     }
                     Betting ga = new Betting(players, users, names, realPlayer, money);
                     System.out.print('\u000C');
                     if (firstTime == true)
                     {
                         System.out.println("Players: " + players);
-                        System.out.println("Games: " + games);
+                        System.out.println("Starting money: " + money + "zm");
                         System.out.println("Names:");
                         for (int i = 0; i < players; i++)
                         {
@@ -183,9 +183,57 @@ public class BlackJackRunner
                     }
                     while (ga.bankrupt() == false)
                     {
-                        
+                        for (int i = 0; i < users; i++)
+                        {
+                            int bet;
+                            System.out.println(ga.getName(i) + " has " + ga.amount(i) + "zm");
+                            do {
+                                System.out.print(ga.getName(i) + ", make a valid bet: ");
+                                while (!in.hasNextInt()) {
+                                    System.out.println("That's not an integer!");
+                                    System.out.print(ga.getName(i) + ", make a valid bet: ");
+                                    in.next();
+                                }
+                                bet = in.nextInt();
+                            } while (ga.isValid(i, bet) == false);
+                            ga.add(i, bet);
+                            System.out.println();
+                        }
+                        for (int i = users; i < players; i++)
+                        {
+                            System.out.println(ga.getName(i) + " has " + ga.amount(i) + "zm");
+                            if (ga.amount(i) < 1000)
+                            {
+                                System.out.println(ga.getName(i) + ": I bet 100zm");
+                                ga.add(i, 100);
+                            } else if (ga.amount(i) < 2000)
+                            {
+                                System.out.println(ga.getName(i) + ": I bet 200zm");
+                                ga.add(i, 200);
+                            } else if (ga.amount(i) < 3000)
+                            {
+                                System.out.println(ga.getName(i) + ": I bet 300zm");
+                                ga.add(i, 300);
+                            } else if (ga.amount(i) < 4000)
+                            {
+                                System.out.println(ga.getName(i) + ": I bet 400zm");
+                                ga.add(i, 400);
+                            } else
+                            {
+                                System.out.println(ga.getName(i) + ": I bet 500zm");
+                                ga.add(i, 500);
+                            }
+                            try {
+                                Thread.sleep(1500);
+                            } catch (InterruptedException ex) {
+                                Thread.currentThread().interrupt();
+                            }
+                            System.out.println();
+                        }
+                        GameSim.sim4(ga);
                     }
                     System.out.println(ga.declareWinner());
+                    System.out.println("Games Played: " + ga.getGamesPlayed());
                 } else
                 {
                     System.out.println("Something's wrong");

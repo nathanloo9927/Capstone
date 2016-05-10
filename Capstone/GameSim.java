@@ -317,7 +317,6 @@ public class GameSim
                 System.out.print(game.getName(i) + "'s turn (Press \"ENTER\" if this is you)");
                 Scanner out = new Scanner(System.in);
                 out.nextLine();
-                System.out.print("Please make your bet (multiple of 100): ");
                 while ((game.isBusted(i) == false) && (game.isPlayerDone(i) == false) && (game.has21(i) == false))
                 {
                     System.out.println("Your Hand: " + game.getRealHand(i));
@@ -398,6 +397,7 @@ public class GameSim
             System.out.print('\u000C');
         }
         System.out.println("\n" + game.roundWinner() + "\n");
+        game.emptyPot();
         System.out.println(game.getScores() + "\n");
         game.removeAllCards();
     }
