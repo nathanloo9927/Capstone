@@ -99,12 +99,16 @@ public class Betting extends BlackJack
             } else
             {
                 String people = "We have a tie with " + highest;
+                people += "\nif the pot isn't a multiple of 100 after it is divided evenly, some or";
+                people += "\nall of the money will go away";
                 int ties = indexOfTies.size();
                 int split = pot / ties;
+                int multiple = split / 100;
+                int average = multiple * 100;
                 for (Integer i : indexOfTies)
                 {
                     people += ("\n" + super.getName(i));
-                    money[i] += split;
+                    money[i] += average;
                 }
                 return people;
             }
