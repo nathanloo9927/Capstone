@@ -206,7 +206,7 @@ public class BlackJack
         {
             if (numAces[currentPlayer] >= 2)
             {
-                int temp = handValue[currentPlayer][1];
+                int temp = handValue[currentPlayer][0];
                 handValue[currentPlayer][1] = temp + 11;
                 handValue[currentPlayer][0] += 1;
             } else
